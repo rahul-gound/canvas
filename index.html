@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evolution of Stars and Their End Stages</title>
+  <style>
+    :root {
+      --bg-1: #050816;
+      --bg-2: #0c1633;
+      --card: rgba(255, 255, 255, 0.08);
+      --text: #eef4ff;
+      --muted: #b8c7e6;
+      --accent: #7cc7ff;
+      --accent-2: #b592ff;
+      --border: rgba(255, 255, 255, 0.14);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124, 199, 255, 0.16), transparent 20%),
+        radial-gradient(circle at 80% 10%, rgba(181, 146, 255, 0.14), transparent 18%),
+        radial-gradient(circle at 60% 75%, rgba(255, 255, 255, 0.07), transparent 15%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9), transparent 50%),
+        radial-gradient(1.5px 1.5px at 35% 40%, rgba(255,255,255,0.8), transparent 50%),
+        radial-gradient(2px 2px at 70% 30%, rgba(255,255,255,0.85), transparent 50%),
+        radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,255,255,0.8), transparent 50%),
+        radial-gradient(2px 2px at 25% 75%, rgba(255,255,255,0.8), transparent 50%),
+        radial-gradient(1.5px 1.5px at 60% 85%, rgba(255,255,255,0.8), transparent 50%);
+      animation: twinkle 7s linear infinite;
+      opacity: 0.65;
+    }
+
+    .stars::before {
+      transform: scale(1.2);
+      opacity: 0.4;
+      animation-duration: 11s;
+    }
+
+    .stars::after {
+      transform: scale(1.5);
+      opacity: 0.25;
+      animation-duration: 15s;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.8; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 28px 18px 22px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent);
+      font-size: 0.92rem;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 16px auto 10px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.08;
+      max-width: 800px;
+    }
+
+    .subtitle {
+      margin: 0 auto;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.12rem);
+      line-height: 1.65;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.08);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(124, 199, 255, 0.45);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(124, 199, 255, 0.22), rgba(181, 146, 255, 0.22));
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: start;
+      margin-top: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .embed-card {
+      padding: 18px;
+    }
+
+    .embed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .embed-header h2,
+    .info-card h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .embed-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .embed-wrapper iframe {
+      display: block;
+      width: 100%;
+      min-height: 540px;
+      border: 0;
+    }
+
+    .info-card {
+      padding: 22px;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 10px;
+    }
+
+    .topic-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .topic {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .topic strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .embed-wrapper iframe {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(100% - 20px, 1100px);
+        padding-top: 22px;
+      }
+
+      .hero {
+        padding-top: 12px;
+      }
+
+      .embed-card,
+      .info-card {
+        padding: 14px;
+      }
+
+      .embed-wrapper iframe {
+        min-height: 320px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <main class="container">
+    <section class="hero">
+      <div class="badge">Class 8 Science • Space Presentation</div>
+      <h1>Evolution of Stars and Their End Stages</h1>
+      <p class="subtitle">
+        Explore how stars are born inside nebulae, how they grow into giants or supergiants,
+        and how they end as white dwarfs, neutron stars, or black holes.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="https://gamma.app/embed/repjlj8bvsu2l5k" target="_blank" rel="noopener noreferrer">Open Presentation</a>
+        <button class="btn" id="fullscreenBtn" type="button">Fullscreen Embed</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card embed-card">
+        <div class="embed-header">
+          <h2>Embedded Gamma Presentation</h2>
+          <span>Ready for class 🌠</span>
+        </div>
+        <div class="embed-wrapper" id="embedWrapper">
+          <iframe
+            src="https://gamma.app/embed/repjlj8bvsu2l5k"
+            style="width: 700px; max-width: 100%; height: 450px"
+            allow="fullscreen"
+            title="Evolution of Stars and Their End Stages">
+          </iframe>
+        </div>
+      </div>
+
+      <aside class="card info-card">
+        <h2>Topics Covered</h2>
+        <p>
+          This webpage presents your science topic in a neat cosmic frame. You can use it to
+          show the Gamma deck directly in a browser.
+        </p>
+
+        <div class="topic-list">
+          <div class="topic">
+            <strong>Star Formation</strong>
+            Interstellar clouds of gas and dust collapse under gravity to form stars.
+          </div>
+          <div class="topic">
+            <strong>Red Giants and Supergiants</strong>
+            Stars expand as they age, and their future depends on their mass.
+          </div>
+          <div class="topic">
+            <strong>Stellar End Stages</strong>
+            Smaller stars become white dwarfs, larger ones may become neutron stars or black holes.
+          </div>
+          <div class="topic">
+            <strong>Class Tip</strong>
+            Open this page in full screen while explaining the slides for a smooth presentation.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <p class="footer">Made for Himanshu Singh • HTML, CSS, and JavaScript in one file</p>
+  </main>
+
+  <script>
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const embedWrapper = document.getElementById('embedWrapper');
+
+    fullscreenBtn.addEventListener('click', async () => {
+      try {
+        if (embedWrapper.requestFullscreen) {
+          await embedWrapper.requestFullscreen();
+        } else if (embedWrapper.webkitRequestFullscreen) {
+          embedWrapper.webkitRequestFullscreen();
+        } else if (embedWrapper.msRequestFullscreen) {
+          embedWrapper.msRequestFullscreen();
+        }
+      } catch (error) {
+        alert('Fullscreen could not be started in this browser.');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
